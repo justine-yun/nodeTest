@@ -3,7 +3,7 @@ const bcrypt = require("bcrypt");
 const saltRounds = 10;
 const jwt = require("jsonwebtoken");
 
-const userSchema = new mongoose.Schema({
+const userSchema = mongoose.Schema({
     name: {
         type: String,
         maxLength: 50
@@ -76,7 +76,7 @@ userSchema.methods.generateToken = function(callback){
     });
 }
 
-userSchema.statics.findByToken = function(token, callback){
+userSchema.static("findByToken", function(token, callback){
     let user = this;
 
     jwt.verify(token, "secretToken", function(err, decoded){
@@ -84,10 +84,10 @@ userSchema.statics.findByToken = function(token, callback){
             if(err){
                 return callback(err);
             }
-            callback(null, user);
+            return callback(null, user);
         });
     });
-}
+});
 
 const User = mongoose.model("User", userSchema);
 

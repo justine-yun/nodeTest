@@ -1,9 +1,9 @@
-const User = require("../models/User");
+const { User } = require("../models/User");
 
 let auth = (req, res, next) => {
-    let token = req.cookies.x_auth;
+    let token = req.cookies["x_auth"];
 
-    User.findByToken(token, (err, user) => {
+    User.findByToken(token, function(err, user) {
         if(err){
             throw err;
         }
@@ -14,7 +14,7 @@ let auth = (req, res, next) => {
         req.token = token;
         req.user = user;
         next();
-    })
+    });
 }
 
 module.exports = { auth };
