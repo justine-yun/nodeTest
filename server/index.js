@@ -7,7 +7,6 @@ const { auth } = require("./middleware/auth");
 const { User } = require("./models/User");
 
 app.use(bodyParser.urlencoded({extended: true}));
-
 app.use(bodyParser.json());
 app.use(cookieParser());
 
